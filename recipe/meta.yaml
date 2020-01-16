@@ -1,4 +1,4 @@
-{% set version = "3.1" %}
+{% set version = '3.1' %}
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -7,7 +7,6 @@ package:
   version: {{ version|replace("-", "_") }}
 
 source:
-  fn: leaps_{{ version }}.tar.gz
   url:
     - {{ cran_mirror }}/src/contrib/leaps_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/leaps/leaps_{{ version }}.tar.gz
@@ -16,17 +15,16 @@ source:
 build:
   merge_build_host: True  # [win]
   number: 0
-  skip: true  # [win32]
   rpaths:
     - lib/R/lib/
     - lib/
 
 requirements:
   build:
-    - {{ compiler('c') }}        # [not win]
-    - {{ compiler('fortran') }}  # [not win]
+    - {{ compiler('c') }}              # [not win]
     - {{ compiler('m2w64_c') }}        # [win]
-    - {{ compiler('m2w64_fortran') }}        # [win]
+    - {{ compiler('fortran') }}        # [not win]
+    - {{ compiler('m2w64_fortran') }}  # [win]
     - {{posix}}filesystem        # [win]
     - {{posix}}make
     - {{posix}}sed               # [win]
@@ -45,17 +43,26 @@ test:
 
 about:
   home: https://CRAN.R-project.org/package=leaps
-  license: GPL (>= 2)
+  license: GPL-2
   summary: Regression subset selection, including exhaustive search.
-  license_family: GPL3
-  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-3'
+  license_family: GPL2
+  license_file:
+    - '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2'
 
 extra:
   recipe-maintainers:
     - conda-forge/r
-    - johanneskoester
-    - bgruening
-    - daler
-    - jdblischak
-    - cbrueffer
-    - dbast
+
+# Package: leaps
+# Title: Regression Subset Selection
+# Version: 3.1
+# Author: Thomas Lumley based on Fortran code by Alan Miller
+# Description: Regression subset selection, including exhaustive search.
+# Depends:
+# Suggests: biglm
+# License: GPL (>= 2)
+# Maintainer: Thomas Lumley <t.lumley@auckland.ac.nz>
+# NeedsCompilation: yes
+# Packaged: 2020-01-15 22:46:02 UTC; tlum005
+# Repository: CRAN
+# Date/Publication: 2020-01-16 17:50:05 UTC
